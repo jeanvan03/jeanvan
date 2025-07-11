@@ -1,12 +1,747 @@
-<style>
-  .t1 {
-    text-align: center;
-</style>
-<h2>TEST</h2>
-<div class="t1">
-<input type="text" placeholder="User">
-<br>
-<input type="password" placeholder="User">
-<br>
-<button type="button">LOGIN</button>
-</div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GunungLestari - Pusat Perlengkapan Pendakian</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-chip {
+            transition: all 0.3s ease;
+        }
+        
+        .category-chip:hover {
+            background-color: #1e40af;
+            color: white;
+        }
+        
+        .footer-wave {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%231e40af" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,192C672,181,768,139,864,128C960,117,1056,139,1152,160C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: cover;
+        }
+        
+        .search-bar:focus {
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/077d77bb-7e21-41e4-968a-5d599f47a63d.png" alt="Logo GunungLestari dengan ikon gunung dan teks berwarna biru tua" class="h-8 w-auto">
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Beranda</a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Produk</a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Kategori</a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Tentang Kami</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-1 flex items-center justify-center px-2 lg:ml-6 lg:justify-end">
+                        <div class="w-full max-w-xs lg:max-w-md">
+                            <label for="search" class="sr-only">Cari</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <input id="search" name="search" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Cari peralatan gunung..." type="search">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <button type="button" class="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <span class="sr-only">Keranjang Belanja</span>
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                        </button>
+                        <button type="button" class="ml-3 p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <span class="sr-only">Profil</span>
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-gradient text-white">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">Persiapkan Petualangan Anda</h1>
+                <p class="mt-6 max-w-lg mx-auto text-xl text-blue-100">Temukan peralatan gunung terbaik untuk pendakian aman dan nyaman</p>
+                <div class="mt-10">
+                    <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50">Jelajahi Produk</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="bg-white">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">Kategori Produk</h2>
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+                <a href="#" class="category-chip bg-gray-50 rounded-lg p-4 text-center hover:shadow-md">
+                    <div class="mx-auto h-12 w-12 flex items-center justify-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/35cc470f-e3c1-45a4-959a-adb16aef8717.png" alt="Ikon tenda untuk kategori camping" class="h-12 w-12">
+                    </div>
+                    <p class="mt-2 text-sm font-medium text-gray-900">Tenda</p>
+                </a>
+                <a href="#" class="category-chip bg-gray-50 rounded-lg p-4 text-center hover:shadow-md">
+                    <div class="mx-auto h-12 w-12 flex items-center justify-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c234cf5f-8ee9-466c-815c-cf898cde8333.png" alt="Ikon sleeping bag untuk kategori tidur" class="h-12 w-12">
+                    </div>
+                    <p class="mt-2 text-sm font-medium text-gray-900">Sleeping</p>
+                </a>
+                <a href="#" class="category-chip bg-gray-50 rounded-lg p-4 text-center hover:shadow-md">
+                    <div class="mx-auto h-12 w-12 flex items-center justify-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6144128e-2c6b-468d-b668-676de3592ef8.png" alt="Ikom tas ransel untuk kategori carrier" class="h-12 w-12">
+                    </div>
+                    <p class="mt-2 text-sm font-medium text-gray-900">Carrier</p>
+                </a>
+                <a href="#" class="category-chip bg-gray-50 rounded-lg p-4 text-center hover:shadow-md">
+                    <div class="mx-auto h-12 w-12 flex items-center justify-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/38250458-ba29-419d-bcdf-6783f6913e0e.png" alt="Ikon sepatu gunung untuk kategori footwear" class="h-12 w-12">
+                    </div>
+                    <p class="mt-2 text-sm font-medium text-gray-900">Footwear</p>
+                </a>
+                <a href="#" class="category-chip bg-gray-50 rounded-lg p-4 text-center hover:shadow-md">
+                    <div class="mx-auto h-12 w-12 flex items-center justify-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f4731038-6bac-496d-865b-44aab7e797e1.png" alt="Ikom kompor portable untuk kategori cooking" class="h-12 w-12">
+                    </div>
+                    <p class="mt-2 text-sm font-medium text-gray-900">Cooking</p>
+                </a>
+                <a href="#" class="category-chip bg-gray-50 rounded-lg p-4 text-center hover:shadow-md">
+                    <div class="mx-auto h-12 w-12 flex items-center justify-center">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a00c7e54-0ca4-4e11-a7ef-1afc4a19ff22.png" alt="Ikon alat untuk kategori climbing" class="h-12 w-12">
+                    </div>
+                    <p class="mt-2 text-sm font-medium text-gray-900">Climbing</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Products -->
+    <div class="bg-gray-50">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">Produk Unggulan</h2>
+            <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                <!-- Product 1 -->
+                <div class="product-card group relative bg-white p-4 rounded-lg shadow-sm transition duration-300">
+                    <div class="w-full h-64 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7116f90d-86a8-4557-81a9-8da6efd42021.png" alt="Tenda Eiger berkualitas tinggi dengan warna biru dan abu-abu untuk 4 orang" class="w-full h-full object-center object-cover">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-gray-700">
+                                <a href="#">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    Tenda Eiger 4 Person
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">Tenda Dome</p>
+                        </div>
+                        <p class="text-sm font-medium text-gray-900">Rp 1.250.000</p>
+                    </div>
+                    <div class="mt-2 flex items-center">
+                        <svg class="text-yellow-400 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <span class="text-xs text-gray-500 ml-1">4.8 (125 reviews)</span>
+                    </div>
+                    <button class="mt-4 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Tambah ke Keranjang</button>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card group relative bg-white p-4 rounded-lg shadow-sm transition duration-300">
+                    <div class="w-full h-64 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/94c165a1-48dd-4468-a6e1-87b3786d08ef.png" alt="Carrier Consina 60L warna hitam dengan banyak kompartemen dan tali pengikat yang kuat" class="w-full h-full object-center object-cover">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-gray-700">
+                                <a href="#">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    Carrier Consina 60L
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">Backpack Gunung</p>
+                        </div>
+                        <p class="text-sm font-medium text-gray-900">Rp 850.000</p>
+                    </div>
+                    <div class="mt-2 flex items-center">
+                        <svg class="text-yellow-400 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <span class="text-xs text-gray-500 ml-1">4.7 (89 reviews)</span>
+                    </div>
+                    <button class="mt-4 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Tambah ke Keranjang</button>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card group relative bg-white p-4 rounded-lg shadow-sm transition duration-300">
+                    <div class="w-full h-64 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/626079bd-1747-485a-9272-506401797799.png" alt="Sleeping bag Bergans berwarna merah dan hitam untuk suhu hingga -10°C" class="w-full h-full object-center object-cover">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-gray-700">
+                                <a href="#">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    Sleeping Bag Bergans -10°C
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">Untuk Cuaca Dingin</p>
+                        </div>
+                        <p class="text-sm font-medium text-gray-900">Rp 1.100.000</p>
+                    </div>
+                    <div class="mt-2 flex items-center">
+                        <svg class="text-yellow-400 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <span class="text-xs text-gray-500 ml-1">4.9 (67 reviews)</span>
+                    </div>
+                    <button class="mt-4 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Tambah ke Keranjang</button>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card group relative bg-white p-4 rounded-lg shadow-sm transition duration-300">
+                    <div class="w-full h-64 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/58b2bb40-31f3-481c-b3a8-57f1df30c3fd.png" alt="Sepatu gunung Eiger dengan warna coklat dan hitam, waterproof dan anti slip" class="w-full h-full object-center object-cover">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-gray-700">
+                                <a href="#">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    Sepatu Gunung Eiger Trekking
+                                </a>
+                            </h3>
+                            <p class="mt-1 text-sm text-gray-500">Waterproof</p>
+                        </div>
+                        <p class="text-sm font-medium text-gray-900">Rp 1.350.000</p>
+                    </div>
+                    <div class="mt-2 flex items-center">
+                        <svg class="text-yellow-400 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <span class="text-xs text-gray-500 ml-1">4.6 (112 reviews)</span>
+                    </div>
+                    <button class="mt-4 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="bg-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-2xl font-bold text-gray-900 mb-8">Kenapa Memilih Kami?</h2>
+            </div>
+            <div class="mt-10">
+                <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="text-center">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-5 text-lg font-medium text-gray-900">Produk Asli</h3>
+                        <p class="mt-2 text-sm text-gray-500">Kami hanya menjual produk original dengan garansi resmi dari brand.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-5 text-lg font-medium text-gray-900">Gratis Ongkir</h3>
+                        <p class="mt-2 text-sm text-gray-500">Gratis pengiriman untuk pembelian di atas Rp 1 juta ke seluruh Indonesia.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
+                        <h3 class="mt-5 text-lg font-medium text-gray-900">Pembayaran Aman</h3>
+                        <p class="mt-2 text-sm text-gray-500">Sistem pembayaran yang aman dengan berbagai metode yang tersedia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="bg-gray-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-8">Apa Kata Mereka?</h2>
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <img class="h-12 w-12 rounded-full" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4bde3f34-b6d1-4534-b0b7-5aa23f3278e0.png" alt="Foto customer pria dengan latar belakang gunung">
+                        <div class="ml-4">
+                            <h4 class="text-lg font-medium text-gray-900">Andi Pratama</h4>
+                            <p class="text-sm text-gray-500">Pendaki Gunung</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-600">"Carrier yang saya beli sangat nyaman digunakan saat pendakian ke Rinjani. Kualitas produk benar-benar sesuai dengan harga!"</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <div class="flex items-center">
+                        <img class="h-12 w-12 rounded-full" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b62da53d-5e24-4d1b-9cbe-0cda25fa1aa3.png" alt="Foto customer wanita sedang memegang sleeping bag">
+                        <div class="ml-4">
+                            <h4 class="text-lg font-medium text-gray-900">Dewi Kartika</h4>
+                            <p class="text-sm text-gray-500">Travel Blogger</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-600">"Sleeping bag Bergans sangat hangat saat saya gunakan camping di Dieng. Pelayanan cepat dan pengiriman tepat waktu."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="bg-blue-700">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center">
+            <div class="lg:w-0 lg:flex-1">
+                <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                    Dapatkan Info Promo
+                </h2>
+                <p class="mt-3 max-w-3xl text-lg leading-6 text-blue-200">
+                    Berlangganan newsletter untuk mendapatkan diskon dan informasi produk baru.
+                </p>
+            </div>
+            <div class="mt-8 lg:mt-0 lg:ml-8">
+                <form class="sm:flex">
+                    <label for="email-address" class="sr-only">Alamat Email</label>
+                    <input id="email-address" name="email" type="email" autocomplete="email" required class="w-full px-5 py-3 border border-transparent placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 focus:outline-none sm:max-w-xs rounded-md" placeholder="Masukkan email Anda">
+                    <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+                        <button type="submit" class="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+                            Berlangganan
+                        </button>
+                    </div>
+                </form>
+                <p class="mt-3 text-sm text-blue-200">
+                    Kami menghormati privasi Anda.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-wave bg-blue-900 pt-16 pb-8 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">GunungLestari</h3>
+                    <p class="text-blue-200">Toko perlengkapan gunung terlengkap dengan produk berkualitas untuk petualangan Anda.</p>
+                    <div class="mt-4 flex space-x-6">
+                        <a href="#" class="text-blue-200 hover:text-white">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-blue-200 hover:text-white">
+                            <span class="sr-only">Instagram</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Tautan Cepat</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-200 hover:text-white">Beranda</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white">Produk</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white">Kategori</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white">Tentang Kami</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white">Kontak</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Kontak Kami</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-blue-200 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-blue-200">Jl. Pendaki No. 45, Bandung</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-blue-200 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                            </svg>
+                            <span class="text-blue-200">(022) 1234-5678</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 text-blue-200 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            </svg>
+                            <span class="text-blue-200">info@gununglestari.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-blue-800 text-center">
+                <p class="text-blue-200 text-sm">© 2023 GunungLestari. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal (Initially Hidden) -->
+    <div class="fixed inset-0 overflow-hidden z-50 hidden" id="cartModal">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <div class="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+                <div class="w-screen max-w-md">
+                    <div class="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
+                        <div class="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
+                            <div class="flex items-start justify-between">
+                                <h2 class="text-lg font-medium text-gray-900">Keranjang Belanja</h2>
+                                <div class="ml-3 h-7 flex items-center">
+                                    <button type="button" id="closeCart" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                                        <span class="sr-only">Tutup panel</span>
+                                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <div class="flow-root">
+                                    <ul role="list" class="-my-6 divide-y divide-gray-200" id="cartItems">
+                                        <!-- Cart items will be dynamically inserted here -->
+                                        <li class="py-6 flex">
+                                            <div class="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
+                                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1e266bef-6147-4e47-bff8-07deeca63c27.png" alt="Tenda Eiger ukuran kecil" class="w-full h-full object-center object-cover">
+                                            </div>
+                                            <div class="ml-4 flex-1 flex flex-col">
+                                                <div>
+                                                    <div class="flex justify-between text-base font-medium text-gray-900">
+                                                        <h3>Tenda Eiger 2 Person</h3>
+                                                        <p class="ml-4">Rp 850.000</p>
+                                                    </div>
+                                                    <p class="mt-1 text-sm text-gray-500">Tenda Dome</p>
+                                                </div>
+                                                <div class="flex-1 flex items-end justify-between text-sm">
+                                                    <p class="text-gray-500">Qty 1</p>
+                                                    <div class="flex">
+                                                        <button type="button" class="font-medium text-blue-600 hover:text-blue-500">Hapus</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
+                            <div class="flex justify-between text-base font-medium text-gray-900">
+                                <p>Subtotal</p>
+                                <p>Rp 1.250.000</p>
+                            </div>
+                            <p class="mt-0.5 text-sm text-gray-500">Harga sudah termasuk PPN.</p>
+                            <div class="mt-6">
+                                <a href="#" class="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700">Checkout</a>
+                            </div>
+                            <div class="mt-6 flex justify-center text-sm text-center text-gray-500">
+                                <p>
+                                    atau
+                                    <button type="button" id="continueShopping" class="text-blue-600 font-medium hover:text-blue-500 ml-1">Lanjutkan Belanja<span aria-hidden="true"> &rarr;</span></button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Quick View Modal (Initially Hidden) -->
+    <div class="fixed z-50 inset-0 overflow-y-auto hidden" id="quickViewModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
+            <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full sm:p-6">
+                <div>
+                    <div class="mt-3 sm:mt-5">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4" id="modal-title">Detail Produk</h3>
+                        <div class="mt-2">
+                            <div class="flex flex-col sm:flex-row">
+                                <div class="flex-1 mb-6 sm:mb-0 sm:mr-6">
+                                    <div class="h-64 bg-gray-200 rounded-lg overflow-hidden">
+                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a534f3f8-a031-468a-a877-5fd1d316e1e7.png" alt="Tenda Eiger ukuran besar dengan warna cerah" class="w-full h-full object-center object-cover">
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Tenda Eiger 4 Person</h2>
+                                    <p class="text-xl font-medium text-gray-900 mb-4">Rp 1.250.000</p>
+                                    <div class="flex items-center mb-4">
+                                        <svg class="text-yellow-400 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                        <span class="text-sm text-gray-500 ml-1">4.8 (125 reviews)</span>
+                                    </div>
+                                    <p class="text-gray-500 mb-4">Tenda dome dengan kapasitas 4 orang, waterproof dan tahan angin kuat. Cocok untuk pendakian gunung ataupun camping keluarga.</p>
+                                    <div class="mb-6">
+                                        <h4 class="text-sm font-medium text-gray-900 mb-2">Spesifikasi:</h4>
+                                        <ul class="list-disc pl-5 text-sm text-gray-500">
+                                            <li>Material: Polyester 210T PU3000mm</li>
+                                            <li>Berat: 3.8 kg</li>
+                                            <li>Ukuran: 230x230x140 cm</li>
+                                            <li>Kapasitas: 4 orang</li>
+                                            <li>Anti UV & waterproof</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">Tambah ke Keranjang</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-6">
+                    <button type="button" id="closeQuickView" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cart functionality
+        class ShoppingCart {
+            constructor() {
+                this.cartItems = [];
+                this.cartModal = document.getElementById('cartModal');
+                this.cartItemsContainer = document.getElementById('cartItems');
+                this.cartButton = document.querySelector('button[aria-label="Keranjang Belanja"]');
+                this.closeCartButton = document.getElementById('closeCart');
+                this.continueShoppingButton = document.getElementById('continueShopping');
+                
+                this.initEvents();
+            }
+            
+            initEvents() {
+                // Open cart modal
+                this.cartButton.addEventListener('click', () => {
+                    this.cartModal.classList.remove('hidden');
+                });
+                
+                // Close cart modal
+                this.closeCartButton.addEventListener('click', () => {
+                    this.cartModal.classList.add('hidden');
+                });
+                
+                // Continue shopping
+                this.continueShoppingButton.addEventListener('click', () => {
+                    this.cartModal.classList.add('hidden');
+                });
+                
+                // Add to cart buttons
+                document.querySelectorAll('button:contains("Tambah ke Keranjang")').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productCard = e.target.closest('.product-card');
+                        const productName = productCard.querySelector('h3 a').textContent.trim();
+                        const productPrice = productCard.querySelector('p:last-child').textContent.trim();
+                        const productImage = productCard.querySelector('img').src;
+                        const productCategory = productCard.querySelector('p:not(:last-child)').textContent.trim();
+                        
+                        this.addItem({
+                            name: productName,
+                            price: productPrice,
+                            image: productImage,
+                            category: productCategory,
+                            quantity: 1
+                        });
+                        
+                        // Show notification
+                        this.showNotification(`${productName} telah ditambahkan ke keranjang`);
+                    });
+                });
+            }
+            
+            addItem(item) {
+                this.cartItems.push(item);
+                this.updateCart();
+            }
+            
+            removeItem(index) {
+                this.cartItems.splice(index, 1);
+                this.updateCart();
+            }
+            
+            updateCart() {
+                // Clear current items
+                this.cartItemsContainer.innerHTML = '';
+                
+                // Add new items
+                this.cartItems.forEach((item, index) => {
+                    const cartItem = document.createElement('li');
+                    cartItem.className = 'py-6 flex';
+                    cartItem.innerHTML = `
+                        <div class="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-center object-cover">
+                        </div>
+                        <div class="ml-4 flex-1 flex flex-col">
+                            <div>
+                                <div class="flex justify-between text-base font-medium text-gray-900">
+                                    <h3>${item.name}</h3>
+                                    <p class="ml-4">${item.price}</p>
+                                </div>
+                                <p class="mt-1 text-sm text-gray-500">${item.category}</p>
+                            </div>
+                            <div class="flex-1 flex items-end justify-between text-sm">
+                                <p class="text-gray-500">Qty ${item.quantity}</p>
+                                <div class="flex">
+                                    <button type="button" class="font-medium text-blue-600 hover:text-blue-500 remove-item" data-index="${index}">Hapus</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    this.cartItemsContainer.appendChild(cartItem);
+                });
+                
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const index = e.target.dataset.index;
+                        this.removeItem(index);
+                    });
+                });
+            }
+            
+            showNotification(message) {
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50';
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 500);
+                }, 3000);
+            }
+        }
+        
+        // Quick view functionality
+        class QuickView {
+            constructor() {
+                this.quickViewModal = document.getElementById('quickViewModal');
+                this.closeQuickViewButton = document.getElementById('closeQuickView');
+                
+                this.initEvents();
+            }
+            
+            initEvents() {
+                // Add click events to product cards
+                document.querySelectorAll('.product-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        // Don't open quick view if clicking on "Add to Cart" button
+                        if (e.target.closest('button') && e.target.closest('button').textContent.includes('Tambah ke Keranjang')) {
+                            return;
+                        }
+                        
+                        this.openQuickView(card);
+                    });
+                });
+                
+                // Close quick view
+                this.closeQuickViewButton.addEventListener('click', () => {
+                    this.quickViewModal.classList.add('hidden');
+                });
+            }
+            
+            openQuickView(productCard) {
+                const productName = productCard.querySelector('h3 a').textContent.trim();
+                const productPrice = productCard.querySelector('p:last-child').textContent.trim();
+                const productImage = productCard.querySelector('img').src;
+                const productCategory = productCard.querySelector('p:not(:last-child)').textContent.trim();
+                const productRating = productCard.querySelector('span').textContent.trim();
+                
+                // Update modal content
+                document.getElementById('modal-title').textContent = productName;
+                this.quickViewModal.querySelector('h2').textContent = productName;
+                this.quickViewModal.querySelector('p:first-child').textContent = productPrice;
+                this.quickViewModal.querySelector('img').src = productImage;
+                this.quickViewModal.querySelector('img').alt = productName;
+                this.quickViewModal.querySelector('p:nth-child(4)').textContent = productCategory;
+                this.quickViewModal.querySelector('span:nth-child(2)').textContent = productRating;
+                
+                // Show modal
+                this.quickViewModal.classList.remove('hidden');
+            }
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ShoppingCart();
+            new QuickView();
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Newsletter form handling
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = this.querySelector('input[type="email"]');
+                if (emailInput.value) {
+                    alert('Terima kasih telah berlangganan newsletter kami!');
+                    emailInput.value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
